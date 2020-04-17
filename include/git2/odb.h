@@ -544,6 +544,14 @@ GIT_EXTERN(size_t) git_odb_num_backends(git_odb *odb);
  */
 GIT_EXTERN(int) git_odb_get_backend(git_odb_backend **out, git_odb *odb, size_t pos);
 
+/**
+ * Set the priority of an object database backend by index
+ * @param odb object database
+ * @param pos index into object database backend list
+ * @param priority value for ordering object database backend queue
+ */
+GIT_EXTERN(int) git_odb_set_backend_priority(git_odb *odb, size_t pos, int priority);
+
 /** @} */
 GIT_END_DECL
 #endif

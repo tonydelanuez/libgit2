@@ -68,3 +68,12 @@ void test_odb_sorting__alternate_backends_sorting(void)
 
 	check_backend_sorting(_odb);
 }
+
+void test_odb_sorting__change_basic_backend_priority(void)
+{
+	cl_git_pass(git_odb_add_backend(_odb, new_backend(0), 0));
+	cl_git_pass(git_odb_add_backend(_odb, new_backend(1), 3));
+	cl_git_pass(git_odb_set_backend_priority(_odb, 1, 5));
+	git_odb_add_backend(_odb, new_backend(2), 1);
+	check_backend_sorting(_odb);
+}

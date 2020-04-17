@@ -1521,6 +1521,25 @@ void git_odb_backend_data_free(git_odb_backend *backend, void *data)
 	git__free(data);
 }
 
+int git_odb_set_backend_priority(git_odb *db, size_t index, int priority)
+{
+	size_t i;
+	assert(db);
+
+	if (index > db->backends.length - 1) {
+		git_error_set(GIT_ERROR_INVALID, "invalid odb backend index");
+		return -1;
+	}
+
+	for (i = 0; i < db->backends.length; ++i){
+		if (i == index) {
+			backend_internal *internal = git_vector_get(&db->backends, i);
+			internal->priority = priority;
+		}
+	}
+	return 0;
+}
+
 int git_odb_refresh(struct git_odb *db)
 {
 	size_t i;
